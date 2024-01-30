@@ -20,11 +20,13 @@ function main() {
       tile.appendChild(tileText);
          
       tileParent.appendChild(tile);
+
+      console.log("Generatedtile");
    }
 }
 
-main()
-main()
+main();
+main();
 
 var tiles = document.getElementsByClassName("tile-inner");
 for (var i = 0; i < tiles.length; i++) {
