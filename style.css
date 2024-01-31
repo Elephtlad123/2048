@@ -5,6 +5,12 @@
 
     --2color: #eee4da;
     --4color: #eee1c9;
+    --8color: #f3b27a;
+    --16color: #f69664;
+    --32color: #f77c5f;
+    --64color: #f75f3b;
+    --128color: #edd073;
+
 }
 
 body {
@@ -89,8 +95,9 @@ body {
     height: 100%;
     width: auto;
     border-radius: 5%;
+}
 
-}.tile-inner {
+.tile-inner {
     position: absolute;
     width: 22%;
 
