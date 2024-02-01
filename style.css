@@ -115,3 +115,44 @@ body {
     
     color: #776e65;
 }
+
+.temp-container{
+    width: 500px;
+    height: 500px;
+    background-color: #bbada0;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -256px;
+    margin-left: -256px;
+
+    border-radius: 2%;
+
+    display: grid; 
+}
+
+.temp-grid{
+    width: 95%;
+    height: 95%;
+
+    margin-left: 2.5%;
+    margin-top: 2.5%;
+
+    display: grid;
+
+    resize: none;
+    max-width: 95%;
+    max-height: 95%; 
+}
+
+.temp-tile {
+    position: absolute;
+    background-color: black;
+    text-align: center; 
+    height: 22%;
+    width: 22%;
+    border-radius: 5%;
+    z-index: 5;
+    left:75%
+}
