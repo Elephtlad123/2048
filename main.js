@@ -3,6 +3,8 @@ var grid = [[0,0,0,0],
             [0,0,0,0],
             [0,0,0,0],]
 
+var Offsets = [2.5,27,51,75]
+
 var root = document.documentElement;
 var style = getComputedStyle(root);
 
@@ -56,105 +58,51 @@ function checkKey(e) {
 
    if (e.keyCode == '38') {
       // up arrow
- 
       let valid = false;
- 
-      for (y=3; y > 0; y-=1){
-         for (x=0; x < 4; x++){
-          
-            if (grid[y][x] != 0) {
-               if (grid[y-1][x] === 0){
-                  grid[y-1][x] = grid[y-1][x] + grid[y][x];
-                  grid[y][x] = 0;
-                  let tile = getTile(y,x);
-                  getTile(y-1,x).appendChild(tile.firstChild);
-                  valid = true;
-                  
-               } else { if (grid[y][x] === grid[y-1][x]){
-                  grid[y-1][x] = grid[y-1][x] + grid[y][x];
-                  grid[y][x] = 0;
-                  let toptile = getTile(y-1,x);
-                  let bottomtile = getTile(y,x);
-                  toptile.firstChild.firstChild.innerHTML = grid[y-1][x];
-                  toptile.firstChild.id = grid[y-1][x];
-                  toptile.firstChild.style.backgroundColor = style.getPropertyValue('--'+String(toptile.firstChild.id)+'color');
-                  if (grid[y-1][x] > 4){toptile.firstChild.firstChild.style.color = '#f9f6f2';}
-                  bottomtile.firstChild.remove();
-                  valid = true;
-               }}
+      let merged = false;
+
+      for (x=0; x<4; x++){
+         for (y=0; y<4; y++){
+
+            if (grid[y][x] != 0){
+               for (z=1; z<y+1; z++){
+
+                  if (grid[y-z][x] === 0){
+                     grid[y-z][x] = grid[y-z+1][x];
+                     grid[y-z+1][x] = 0;
+                     let tileInner = getTile(y-z+1,x).firstChild;
+                     getTile(y-z,x).append(tileInner);
+                     valid = true;
+                     
+                  } else { if(grid[y-z][x] === grid[y-z+1][x]){
+                     if (merged === false){
+                        grid[y-z][x] *= 2;
+                        grid[y-z+1][x] = 0;
+                        let tileInner = getTile(y-z,x).firstChild;
+                        tileInner.id = String(grid[y-z][x]);
+                        tileInner.firstChild.innerHTML = String(tileInner.id);
+                        tileInner.style.backgroundColor = style.getPropertyValue('--'+String(tileInner.id)+'color');
+                        if (grid[y-z][x] > 4){tileInner.firstChild.style.color = '#f9f6f2';}
+                        getTile(y-z+1,x).firstChild.remove();
+                        valid = true;
+                        merged = true;
+                     }
+                  }}
+               }
             }
          }
       }
-      if (valid === true) {generateTile();}
+      if (valid){generateTile();}
    }
 
 
    else if (e.keyCode == '40') {
       // down arrow
-
-      valid = false;
- 
-      for (y=0; y < 3; y++){
-         for (x=0; x < 4; x++){
-          
-            if (grid[y][x] != 0) {
-               if (grid[y+1][x] === 0){
-                  grid[y+1][x] = grid[y][x];
-                  grid[y][x] = 0;
-                  let tile = getTile(y,x);
-                  getTile(y+1,x).appendChild(tile.firstChild);
-                  valid = true;
-                  
-               } else { if (grid[y][x] === grid[y+1][x]){
-                  grid[y+1][x] = grid[y+1][x] + grid[y][x];
-                  grid[y][x] = 0;
-                  let bottomtile = getTile(y+1,x);
-                  let toptile = getTile(y,x);
-                  bottomtile.firstChild.firstChild.innerHTML = grid[y+1][x];
-                  bottomtile.firstChild.id = grid[y+1][x];
-                  bottomtile.firstChild.style.backgroundColor = style.getPropertyValue('--'+String(bottomtile.firstChild.id)+'color');
-                  if (grid[y+1][x] > 4){bottomtile.firstChild.firstChild.style.color = '#f9f6f2';}
-                  toptile.firstChild.remove();
-                  valid = true;
-               }}
-            }
-         }
-      }
-      if (valid === true) {generateTile();}
    }
    
 
    else if (e.keyCode == '37') {
       // left arrow
-
-      valid = false;
- 
-      for (x=3; x > 0; x-=1){
-         for (y=0; y < 4; y++) {
-            
-            if (grid[y][x] != 0) {
-               if (grid[y][x-1] === 0){
-                  grid[y][x-1] = grid[y][x-1] + grid[y][x];
-                  grid[y][x] = 0;
-                  let tile = getTile(y,x);
-                  getTile(y,x-1).appendChild(tile.firstChild);
-                  valid = true;
-               } else { if(grid[y][x-1] === grid[y][x]){
-                  grid[y][x-1] = grid[y][x-1] + grid[y][x];
-                  grid[y][x] = 0;
-                  let lefttile = getTile(y,x-1);
-                  let righttile = getTile(y,x);
-                  lefttile.firstChild.firstChild.innerHTML = grid[y][x-1];
-                  lefttile.firstChild.id = grid[y][x-1];
-                  lefttile.firstChild.style.backgroundColor = style.getPropertyValue('--'+String(lefttile.firstChild.id)+'color');
-                  if (grid[y][x-1] > 4){lefttile.firstChild.firstChild.style.color = '#f9f6f2';}
-                  righttile.firstChild.remove();
-                  valid = true
-               }}
-            }
-         }
-      }
-      if (valid === true) {generateTile();}
    }
 
 
