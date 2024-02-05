@@ -59,13 +59,14 @@ function checkKey(e) {
    if (e.keyCode == '38') {
       // up arrow
       let valid = false;
-      let merged = false;
 
       for (x=0; x<4; x++){
          for (y=0; y<4; y++){
 
             if (grid[y][x] != 0){
                for (z=1; z<y+1; z++){
+
+                  let merged = false;
 
                   if (grid[y-z][x] === 0){
                      grid[y-z][x] = grid[y-z+1][x];
