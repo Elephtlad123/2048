@@ -1,5 +1,3 @@
-console.log("version: 0.1.43e");
-
 var grid = [[0,0,0,0],
             [0,0,0,0],
             [0,0,0,0],
@@ -61,9 +59,10 @@ function checkKey(e) {
    if (e.keyCode == '38') {
       // up arrow
       let valid = false;
+      let merged = false;
 
       for (x=0; x<4; x++){
-         let merged = false;
+         merged = false;
          for (y=0; y<4; y++){
 
             if (grid[y][x] != 0){
@@ -100,6 +99,24 @@ function checkKey(e) {
 
    else if (e.keyCode == '40') {
       // down arrow
+      let valid = false;
+      let merged = false;
+
+      for (x=0; x<4; x++){
+         merged = false;
+         for (y=3; y>=0; y--){
+            if (grid[y][x] != 0){
+               for (z=1; z<4-y;z++){
+
+                  if (grid[y+z][x] == 0){
+                     grid[y+z][x] = grid[y+z-1][x];
+                     grid[y+z-1][x] = 0;
+                  } 
+               }
+            }
+         }
+      }
+      console.log(grid);
    }
    
 
