@@ -3,6 +3,8 @@ var grid = [[0,0,0,0],
             [0,0,0,0],
             [0,0,0,0],]
 
+var score = 0;
+
 var Offsets = [2.5,27,51,75]
 
 var root = document.documentElement;
@@ -85,6 +87,10 @@ function checkKey(e) {
                         tileInner.style.backgroundColor = style.getPropertyValue('--'+String(tileInner.id)+'color');
                         if (grid[y-z][x] > 4){tileInner.firstChild.style.color = '#f9f6f2';}
                         getTile(y-z+1,x).firstChild.remove();
+
+                        score += grid[y-z][x];
+                        document.getElementById("score").innerHTML = String(score);
+
                         valid = true;
                         merged = true;
                      }
@@ -105,28 +111,128 @@ function checkKey(e) {
       for (x=0; x<4; x++){
          merged = false;
          for (y=3; y>=0; y--){
+
             if (grid[y][x] != 0){
                for (z=1; z<4-y;z++){
 
                   if (grid[y+z][x] == 0){
                      grid[y+z][x] = grid[y+z-1][x];
                      grid[y+z-1][x] = 0;
-                  } 
+                     let tileInner = getTile(y+z-1,x).firstChild;
+                     getTile(y+z,x).append(tileInner);
+                     valid = true;
+
+                  } else {if (grid[y+z][x] === grid[y+z-1][x]){
+                     if (merged === false){
+                        grid[y+z][x] *= 2;
+                        grid[y+z-1][x] = 0;
+                        let tileInner = getTile(y+z,x).firstChild;
+                        tileInner.id = String(grid[y+z][x]);
+                        tileInner.firstChild.innerHTML = String(tileInner.id);
+                        tileInner.style.backgroundColor = style.getPropertyValue('--'+String(tileInner.id)+'color');
+                        if (grid[y+z][x] > 4){tileInner.firstChild.style.color = '#f9f6f2';}
+                        getTile(y+z-1,x).firstChild.remove();
+
+                        score += grid[y+z][x];
+                        document.getElementById("score").innerHTML = String(score);
+
+                        valid = true;
+                        merged = true;
+                     }
+                  }} 
                }
             }
          }
       }
-      console.log(grid);
+      if (valid){generateTile();}
    }
    
 
    else if (e.keyCode == '37') {
       // left arrow
+      let valid = false;
+      let merged = false;
+
+      for (y=0; y<4; y++){
+         merged = false;
+         for (x=0; x<4; x++){
+            
+            if (grid[y][x] != 0){
+               for (z=1; z<x+1; z++){
+
+                  if (grid[y][x-z] === 0){
+                     grid[y][x-z] = grid[y][x-z+1];
+                     grid[y][x-z+1] = 0;
+                     let tileInner = getTile(y,x-z+1).firstChild;
+                     getTile(y,x-z).append(tileInner);
+
+                  } else {if (grid[y][x-z] === grid[y][x-z+1]){
+                     if (merged === false){
+                        grid[y][x-z] *= 2;
+                        grid[y][x-z+1] = 0;
+                        let tileInner = getTile(y,x-z).firstChild;
+                        tileInner.id = grid[y][x-z];
+                        tileInner.firstChild.innerHTML = String(tileInner.id);
+                        tileInner.style.backgroundColor = style.getPropertyValue('--'+String(tileInner.id)+'color');
+                        if (grid[y][x-z] > 4){tileInner.firstChild.style.color = '#f9f6f2';}
+                        getTile(y,x-z+1).firstChild.remove();
+
+                        score += grid[y][x-z];
+                        document.getElementById("score").innerHTML = String(score);
+
+                        merged = true;
+                        valid = true;
+                     }
+                  }}
+               }
+            }
+         }
+      }
+      if (valid){generateTile();}
    }
 
 
    else if (e.keyCode == '39') {
       // right arrow
-   }
+      let valid = false;
+      let merged = false;
 
+      for (y=0; y<4; y++){
+         merged = false;
+         for (x=3; x>=0; x--){
+            
+            if (grid[y][x] != 0){
+               for (z=1; z<4-x; z++){
+
+                  if (grid[y][x+z] === 0){
+                     grid[y][x+z] = grid[y][x+z-1];
+                     grid[y][x+z-1] = 0;
+                     let tileInner = getTile(y,x+z-1).firstChild;
+                     getTile(y,x+z).append(tileInner);
+
+                  } else { if(grid[y][x+z] === grid[y][x+z-1]){
+                     if (merged === false){
+                        grid[y][x+z] *= 2;
+                        grid[y][x+z-1] = 0;
+                        let tileInner = getTile(y,x+z).firstChild;
+                        tileInner.id = String(grid[y][x+z]);
+                        tileInner.firstChild.innerHTML = String(tileInner.id);
+                        tileInner.style.backgroundColor = style.getPropertyValue('--'+String(tileInner.id)+'color');
+                        if (grid[y][x+z] > 4){tileInner.firstChild.style.color = '#f9f6f2';}
+                        getTile(y,x+z-1).firstChild.remove();
+
+                        score += grid[y][x+z];
+                        document.getElementById("score").innerHTML = String(score);
+
+                        valid = true;
+                        merged = true;
+                     }
+                  }}
+               }
+            }
+         }
+      }
+      if (valid){generateTile();}
+   }
+   console.log(score);
 }
