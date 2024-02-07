@@ -165,6 +165,7 @@ function checkKey(e) {
                      grid[y][x-z+1] = 0;
                      let tileInner = getTile(y,x-z+1).firstChild;
                      getTile(y,x-z).append(tileInner);
+                     valid = true;   
 
                   } else {if (grid[y][x-z] === grid[y][x-z+1]){
                      if (merged === false){
@@ -209,6 +210,7 @@ function checkKey(e) {
                      grid[y][x+z-1] = 0;
                      let tileInner = getTile(y,x+z-1).firstChild;
                      getTile(y,x+z).append(tileInner);
+                     valid = true;   
 
                   } else { if(grid[y][x+z] === grid[y][x+z-1]){
                      if (merged === false){
