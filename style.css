@@ -205,10 +205,22 @@ body {
 
     border-radius: 5%;
 
+    background-color: var(--2color);
+
     left: 0%;
-    margin-left: 2.5%; 
+    top: 0%;
+    margin-left: 2.5%;
+    margin-top: 2.5%; 
 
     z-index: 10;
 
-    transition: left .05s;
+    transition: left .25s, top .25s;
+
+    display: grid;
+    align-content: center;
+}
+
+.temp-tile span{
+    width: 100%;
+    text-align: center;
 }
