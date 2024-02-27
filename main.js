@@ -4,8 +4,7 @@ var grid = [[0,0,0,0],
             [0,0,0,0],];
 
 var score = 0;
-
-var Offsets = [2.5,27,51,75];
+var moves = 0;
 
 var root = document.documentElement;
 var style = getComputedStyle(root);
@@ -24,8 +23,6 @@ function generateTile(){
    let GenPos = Math.floor(Math.random() * freeSpaces.length);
    let Genx = (freeSpaces[GenPos])[0];
    let Geny = (freeSpaces[GenPos])[1];
-
-   console.log(freeSpaces);
 
    let rows = document.getElementsByClassName("grid-row");
 
@@ -47,8 +44,6 @@ function generateTile(){
 
 generateTile()
 generateTile()
-
-console.log(grid)
 
 document.onkeydown = checkKey;
 
@@ -110,8 +105,11 @@ function checkKey(e) {
             }
          }
       }
-      if (valid){generateTile();}
-      console.log(gridMerged);
+      if (valid){
+         generateTile();
+         moves++;
+         document.getElementById("moves").innerHTML = String(moves);
+      }
    }
 
 
@@ -160,7 +158,11 @@ function checkKey(e) {
             }
          }
       }
-      if (valid){generateTile();}
+      if (valid){
+         generateTile();
+         moves++;
+         document.getElementById("moves").innerHTML = String(moves);
+      }
    }
    
 
@@ -209,7 +211,11 @@ function checkKey(e) {
             }
          }
       }
-      if (valid){generateTile();}
+      if (valid){
+         generateTile();
+         moves++;
+         document.getElementById("moves").innerHTML = String(moves);
+      }
    }
 
 
@@ -258,7 +264,10 @@ function checkKey(e) {
             }
          }
       }
-      if (valid){generateTile();}
+      if (valid){
+         generateTile();
+         moves++;
+         document.getElementById("moves").innerHTML = String(moves);
+      }
    }
-   console.log(score);
 }
