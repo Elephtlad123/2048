@@ -8,6 +8,7 @@ var intervalId = window.setInterval(function(){
         
         var timerInterval = window.setInterval(function(){
             timer.innerHTML = String(new Date().getSeconds() - startTime);
+            console.log(startTime);
         })
     }
   }, 500);
